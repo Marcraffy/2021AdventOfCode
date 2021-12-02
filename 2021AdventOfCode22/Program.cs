@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace _2021AdventOfCode21
+namespace _2021AdventOfCode22
 {
     class Program
     {
@@ -18,7 +18,7 @@ namespace _2021AdventOfCode21
                 opCount++;
                 position.ProcessInstruction(instruction);
 
-                if (DEBUG) Console.WriteLine($"({opCount})\t({instruction.Direction.ToString().First()})\t({instruction.Distance})\t({position.Depth})\t({position.HorizontalPosition})\t({position.GeometricPosition})");
+                if (DEBUG) Console.WriteLine($"({opCount})\t({instruction.Direction.ToString().First()})\t({instruction.Distance})\t({position.HorizontalPosition})\t({position.Aim})\t({position.Depth})\t({position.GeometricPosition})");
             }
             Console.WriteLine($"{position.GeometricPosition} final geometeric position");
         }
@@ -26,25 +26,23 @@ namespace _2021AdventOfCode21
 
     class Position
     {
-        private int aim = 0;
         public int HorizontalPosition { get; set; }
         public int Depth { get; set; }
+        public int Aim { get; set; }
 
         public void ProcessInstruction(Instruction instruction)
         {
             switch (instruction.Direction)
             {
                 case Instruction.DirectionEnum.Up:
-                    aim -= instruction.Distance;
+                    Aim -= instruction.Distance;
                     break;
                 case Instruction.DirectionEnum.Down:
-                    aim += instruction.Distance;
+                    Aim += instruction.Distance;
                     break;
                 case Instruction.DirectionEnum.Forward:
                     HorizontalPosition += instruction.Distance;
-                    Depth += aim*instruction.Distance;
-                    break;
-                default:
+                    Depth += Aim * instruction.Distance;
                     break;
             }
         }
