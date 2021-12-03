@@ -9,6 +9,7 @@ namespace Data
     {
         public const string DEPTH_MEASUREMENTS = "DEPTH_MEASUREMENTS";
         public const string PATH = "PATH";
+        public const string DIAGNOSTICS = "DIAGNOSTICS";
     }
 
     public static class Data
@@ -17,12 +18,13 @@ namespace Data
         {
             {DataFileKeys.DEPTH_MEASUREMENTS, "data.txt"},
             {DataFileKeys.PATH, "path.txt"},
+            {DataFileKeys.DIAGNOSTICS, "binary.txt"},
         };
 
         public static List<T> GetData<T>(string dataFileKey) where T: class
         {
             var data = File.ReadAllText(DataFiles[dataFileKey]);
-            var output = data.Split('\n').Select(input => MapData<T>(dataFileKey, input)).ToList();
+            var output = data.Split('\n').Select(input => MapData<T>(dataFileKey, input.Trim())).ToList();
             return output;
         }
 
@@ -32,9 +34,23 @@ namespace Data
             {
                 DataFileKeys.DEPTH_MEASUREMENTS => new Depth(input) as T,
                 DataFileKeys.PATH => new PathInstruction(input) as T,
+                DataFileKeys.DIAGNOSTICS => new Diagnostic(input) as T,
                 _ => null,
             };
         }
+    }
+
+    public class Diagnostic
+    {
+
+        public Diagnostic(string input)
+        {
+            Data = Convert.ToUInt32(input, 2);
+            BitLength = input.Length;
+        }
+
+        public uint Data { get; set; }
+        public int BitLength { get; set; }
     }
 
     public class Depth
