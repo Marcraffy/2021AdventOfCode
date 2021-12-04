@@ -33,7 +33,7 @@ namespace Data
                     var numbers = dataSplitOnNewLine.First();
                     var boards = dataSplitOnNewLine.Skip(1).Where(item => !string.IsNullOrWhiteSpace(item)).ToList();
                     var bingoBoards = new List<T>();
-                    for (int index = 0; index < boards.Count/5; index+=5)
+                    for (int index = 0; index < boards.Count; index+=5)
                     {
                         var board = boards.Skip(index).Take(5).Aggregate("", (acc, val) => acc + val + ' ');
                         bingoBoards.Add(new BingoBoard(board, numbers) as T);
