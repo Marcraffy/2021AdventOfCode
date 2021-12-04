@@ -50,13 +50,7 @@ namespace _2021AdventOfCode32
                 var dataValue = data & ((uint)Math.Pow(2, offset));
                 var boolValue = Convert.ToBoolean(dataValue);
 
-                if (roundedAverage && checkValue && boolValue)
-                {
-                    return true;
-                }
-
-                var checks = new List<bool> { roundedAverage, checkValue, boolValue };
-                var checkCount = checks.Where(check => check).Count();
+                var checkCount = new List<bool> { roundedAverage, checkValue, boolValue }.Where(check => check).Count();
 
                 return checkCount == 1 || checkCount == 3;
             };
