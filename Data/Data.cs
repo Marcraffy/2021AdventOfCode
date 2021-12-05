@@ -11,6 +11,7 @@ namespace Data
         public const string PATH = "PATH";
         public const string DIAGNOSTICS = "DIAGNOSTICS";
         public const string BINGO = "BINGO";
+        public const string VENTS = "VENTS";
     }
 
     public static class Data
@@ -21,6 +22,7 @@ namespace Data
             {DataFileKeys.PATH, "path.txt"},
             {DataFileKeys.DIAGNOSTICS, "binary.txt"},
             {DataFileKeys.BINGO, "bingo.txt"},
+            {DataFileKeys.VENTS, "vents.txt"},
         };
 
         public static List<T> GetData<T>(string dataFileKey) where T: class
@@ -51,22 +53,53 @@ namespace Data
                 DataFileKeys.DEPTH_MEASUREMENTS => new Depth(input) as T,
                 DataFileKeys.PATH => new PathInstruction(input) as T,
                 DataFileKeys.DIAGNOSTICS => new Diagnostic(input) as T,
+                DataFileKeys.VENTS => new VentLine(input) as T,
                 _ => null,
             };
         }
     }
 
+    public class VentLine
+    {
+        public Coordinate First { get; set; }
+        public Coordinate Second { get; set; }
+        public VentLine(string input)
+        {
+            var data = input.Split(" -> ");
+            First = new Coordinate(data[0]);
+            Second = new Coordinate(data[1]);
+        }
+    }
+
+    public class Coordinate
+    {
+        public int Row { get; set; }
+        public int Column { get; set; }
+
+        public Coordinate(int row, int column)
+        {
+            Row = row;
+            Column = column;
+        }
+
+        public Coordinate(string input)
+        {
+            var data = input.Split(',');
+            Column = Convert.ToInt32(data[0]);
+            Row = Convert.ToInt32(data[1]);
+        }
+    }
+
     public class BingoBoard
     {
+        public int[,] Board { get; set; }
+        public int[] Numbers { get; set; }
 
         public BingoBoard(string input, string numbers)
         {
             Board = GetBoard(input);
             Numbers = numbers.Split(',').Select(number => Convert.ToInt32(number)).ToArray();
         }
-
-        public int[,] Board { get; set; }
-        public int[] Numbers { get; set; }
 
         private int[,] GetBoard(string input)
         {
