@@ -15,12 +15,7 @@ namespace _2021AdventOfCode62
             if (DEBUG) Console.WriteLine($"Initial State: \t {lives.Count}");
 
             var lanternfish = new LanternfishCount(lives);
-            for (int day = 1; day <= 256; day++)
-            {
-                var count = lanternfish.AdvanceOneDay();
-
-                if (DEBUG) Console.WriteLine($"After {day} \tday{(day == 1 ? "" : "s")}: \t {count}");
-            }
+            lanternfish.AdvanceDays(256);
 
             Console.WriteLine($"Number of Lanternfish:\t {lanternfish.TotalNumberOfFish}");
         }
@@ -77,6 +72,18 @@ namespace _2021AdventOfCode62
             NumberOfFishWithTimer6 += numberOfFishSpawning;
 
             return TotalNumberOfFish;
+        }
+
+        public long AdvanceDays(int days)
+        {
+            if (days == 0)
+            {
+                return TotalNumberOfFish;
+            }
+
+            AdvanceOneDay();
+
+            return AdvanceDays(days - 1);
         }
     }
 }
