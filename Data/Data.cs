@@ -12,6 +12,7 @@ namespace Data
         public const string DIAGNOSTICS = "DIAGNOSTICS";
         public const string BINGO = "BINGO";
         public const string VENTS = "VENTS";
+        public const string LIFE = "LIFE";
     }
 
     public static class Data
@@ -23,6 +24,7 @@ namespace Data
             {DataFileKeys.DIAGNOSTICS, "binary.txt"},
             {DataFileKeys.BINGO, "bingo.txt"},
             {DataFileKeys.VENTS, "vents.txt"},
+            {DataFileKeys.LIFE, "life.txt"},
         };
 
         public static List<T> GetData<T>(string dataFileKey) where T: class
@@ -54,8 +56,19 @@ namespace Data
                 DataFileKeys.PATH => new PathInstruction(input) as T,
                 DataFileKeys.DIAGNOSTICS => new Diagnostic(input) as T,
                 DataFileKeys.VENTS => new VentLine(input) as T,
+                DataFileKeys.LIFE => new Lives(input) as T,
                 _ => null,
             };
+        }
+    }
+
+    public class Lives
+    {
+        public List<int> StartingLives;
+
+        public Lives(string input)
+        {
+            StartingLives = input.Split(',').Select(life => Convert.ToInt32(life)).ToList();
         }
     }
 
