@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace _2021AdventOfCode51
+namespace _2021AdventOfCode52
 {
     static class Program
     {
@@ -60,6 +60,7 @@ namespace _2021AdventOfCode51
         {
             var isHorizontal = line.First.Row == line.Second.Row;
             var isVeritical = line.First.Column == line.Second.Column;
+            var isDiagonal = !isHorizontal && !isVeritical;
 
             if (isHorizontal)
             {
@@ -77,6 +78,30 @@ namespace _2021AdventOfCode51
                 for (int row = minimumRow; row <= maximumRow; row++)
                 {
                     grid[GetRowIndex(row), GetColumnIndex(line.First.Column)]++;
+                }
+            }
+            else if (isDiagonal)
+            {
+                var isPositive = line.Gradient() > 0;
+                var startingCoordinate = line.First.Column <= line.Second.Column ? line.First : line.Second;
+                var endingCoordinate = line.First.Column > line.Second.Column ? line.First : line.Second;
+                if (isPositive)
+                {
+                    var row = startingCoordinate.Row;
+                    for (int column = startingCoordinate.Column; column <= endingCoordinate.Column; column++)
+                    {
+                        grid[GetRowIndex(row), GetColumnIndex(column)]++;
+                        row++;
+                    }
+                }
+                else
+                {
+                    var row = startingCoordinate.Row;
+                    for (int column = startingCoordinate.Column; column <= endingCoordinate.Column; column++)
+                    {
+                        grid[GetRowIndex(row), GetColumnIndex(column)]++;
+                        row--;
+                    }
                 }
             }
         }
