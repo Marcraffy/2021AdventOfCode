@@ -45,16 +45,18 @@ namespace _2021AdventOfCode62
 
         public LanternfishCount(List<int> lives)
         {
-            NumberOfFishWithTimer0 = lives.Where(life => life == 0).Count();
-            NumberOfFishWithTimer1 = lives.Where(life => life == 1).Count();
-            NumberOfFishWithTimer2 = lives.Where(life => life == 2).Count();
-            NumberOfFishWithTimer3 = lives.Where(life => life == 3).Count();
-            NumberOfFishWithTimer4 = lives.Where(life => life == 4).Count();
-            NumberOfFishWithTimer5 = lives.Where(life => life == 5).Count();
-            NumberOfFishWithTimer6 = lives.Where(life => life == 6).Count();
-            NumberOfFishWithTimer7 = lives.Where(life => life == 7).Count();
-            NumberOfFishWithTimer8 = lives.Where(life => life == 8).Count();
+            NumberOfFishWithTimer0 = CountFishByTimer(lives, 0);
+            NumberOfFishWithTimer1 = CountFishByTimer(lives, 1);
+            NumberOfFishWithTimer2 = CountFishByTimer(lives, 2);
+            NumberOfFishWithTimer3 = CountFishByTimer(lives, 3);
+            NumberOfFishWithTimer4 = CountFishByTimer(lives, 4);
+            NumberOfFishWithTimer5 = CountFishByTimer(lives, 5);
+            NumberOfFishWithTimer6 = CountFishByTimer(lives, 6);
+            NumberOfFishWithTimer7 = CountFishByTimer(lives, 7);
+            NumberOfFishWithTimer8 = CountFishByTimer(lives, 8);
         }
+
+        private int CountFishByTimer(List<int> lives, int timer) => lives.Where(life => life == timer).Count();
 
         public long AdvanceOneDay()
         {
