@@ -1,6 +1,5 @@
 ﻿using Data;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace _2021AdventOfCode72
@@ -15,16 +14,10 @@ namespace _2021AdventOfCode72
 
             var maxPosition = positions.Max();
             var minPosition = positions.Min();
-            var costs = new List<int>();
 
-            for (int alignmentPosition = minPosition; alignmentPosition <= maxPosition; alignmentPosition++)
-            {
-                var fuelCosts = positions.Select(position => GetFuelCost(position, alignmentPosition)).ToList();
-                var totalFuelCost = fuelCosts.Sum();
-                costs.Add(totalFuelCost);
-            }
-
+            var costs = Enumerable.Range(minPosition, maxPosition).Select(alignmentPosition => positions.Select(position => GetFuelCost(position, alignmentPosition)).Sum());
             var minimumnFuelCost = costs.Min();
+
             Console.WriteLine($"Optimal Fuel Cost:\t {minimumnFuelCost}");
         }
 
