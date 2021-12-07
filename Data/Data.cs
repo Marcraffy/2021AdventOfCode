@@ -13,6 +13,7 @@ namespace Data
         public const string BINGO = "BINGO";
         public const string VENTS = "VENTS";
         public const string LIFE = "LIFE";
+        public const string CRABS = "CRABS";
     }
 
     public static class Data
@@ -25,6 +26,7 @@ namespace Data
             {DataFileKeys.BINGO, "bingo.txt"},
             {DataFileKeys.VENTS, "vents.txt"},
             {DataFileKeys.LIFE, "life.txt"},
+            {DataFileKeys.CRABS, "crabs.txt"},
         };
 
         public static List<T> GetData<T>(string dataFileKey) where T: class
@@ -57,8 +59,19 @@ namespace Data
                 DataFileKeys.DIAGNOSTICS => new Diagnostic(input) as T,
                 DataFileKeys.VENTS => new VentLine(input) as T,
                 DataFileKeys.LIFE => new Lives(input) as T,
+                DataFileKeys.CRABS => new Horizontal(input) as T,
                 _ => null,
             };
+        }
+    }
+
+    public class Horizontal
+    {
+        public List<int> Positions { get; set; }
+
+        public Horizontal(string input)
+        {
+            Positions = input.Split(',').Select(position => Convert.ToInt32(position)).ToList();
         }
     }
 

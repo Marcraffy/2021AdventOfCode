@@ -11,6 +11,9 @@
     <None Update="binary.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="crabs.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="data.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
