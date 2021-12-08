@@ -17,6 +17,9 @@
     <None Update="data.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="display.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="life.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

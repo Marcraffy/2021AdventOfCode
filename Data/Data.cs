@@ -14,6 +14,7 @@ namespace Data
         public const string VENTS = "VENTS";
         public const string LIFE = "LIFE";
         public const string CRABS = "CRABS";
+        public const string DISPLAY = "DISPLAY";
     }
 
     public static class Data
@@ -27,6 +28,7 @@ namespace Data
             {DataFileKeys.VENTS, "vents.txt"},
             {DataFileKeys.LIFE, "life.txt"},
             {DataFileKeys.CRABS, "crabs.txt"},
+            {DataFileKeys.DISPLAY, "display.txt"},
         };
 
         public static List<T> GetData<T>(string dataFileKey) where T: class
@@ -60,8 +62,45 @@ namespace Data
                 DataFileKeys.VENTS => new VentLine(input) as T,
                 DataFileKeys.LIFE => new Lives(input) as T,
                 DataFileKeys.CRABS => new Horizontal(input) as T,
+                DataFileKeys.DISPLAY => new Display(input) as T,
                 _ => null,
             };
+        }
+    }
+
+    public class SevenSegment
+    {
+        public bool SegmentA { get; set; }
+        public bool SegmentB { get; set; }
+        public bool SegmentC { get; set; }
+        public bool SegmentD { get; set; }
+        public bool SegmentE { get; set; }
+        public bool SegmentF { get; set; }
+        public bool SegmentG { get; set; }
+
+        public SevenSegment(string input)
+        {
+            SegmentA = input.Contains('a');
+            SegmentB = input.Contains('b');
+            SegmentC = input.Contains('c');
+            SegmentD = input.Contains('d');
+            SegmentE = input.Contains('e');
+            SegmentF = input.Contains('f');
+            SegmentG = input.Contains('g');
+        }
+    }
+
+    public class Display
+    {
+        public List<SevenSegment> SampleModules { get; set; }
+        public List<SevenSegment> DisplayOutput { get; set; }
+
+        public Display(string input)
+        {
+            var inputs = input.Split('|').Select(set => set.Trim()).ToArray();
+
+            SampleModules = inputs[0].Split(' ').Select(module => new SevenSegment(module)).ToList();
+            DisplayOutput = inputs[1].Split(' ').Select(module => new SevenSegment(module)).ToList();
         }
     }
 
