@@ -68,6 +68,20 @@ namespace Data
         }
     }
 
+    public class Display
+    {
+        public List<SevenSegment> SampleModules { get; set; }
+        public List<SevenSegment> DisplayOutput { get; set; }
+
+        public Display(string input)
+        {
+            var inputs = input.Split('|').Select(set => set.Trim()).ToArray();
+
+            SampleModules = inputs[0].Split(' ').Select(module => new SevenSegment(module)).ToList();
+            DisplayOutput = inputs[1].Split(' ').Select(module => new SevenSegment(module)).ToList();
+        }
+    }
+
     public class SevenSegment
     {
         public bool SegmentA { get; set; }
@@ -88,19 +102,55 @@ namespace Data
             SegmentF = input.Contains('f');
             SegmentG = input.Contains('g');
         }
-    }
 
-    public class Display
-    {
-        public List<SevenSegment> SampleModules { get; set; }
-        public List<SevenSegment> DisplayOutput { get; set; }
+        public SevenSegment() { }
 
-        public Display(string input)
+        public static bool operator ==(SevenSegment moduleA, SevenSegment moduleB)
         {
-            var inputs = input.Split('|').Select(set => set.Trim()).ToArray();
+            return moduleA?.SegmentA == moduleB?.SegmentA
+                && moduleA?.SegmentB == moduleB?.SegmentB
+                && moduleA?.SegmentC == moduleB?.SegmentC
+                && moduleA?.SegmentD == moduleB?.SegmentD
+                && moduleA?.SegmentE == moduleB?.SegmentE
+                && moduleA?.SegmentF == moduleB?.SegmentF
+                && moduleA?.SegmentG == moduleB?.SegmentG;
+        }
 
-            SampleModules = inputs[0].Split(' ').Select(module => new SevenSegment(module)).ToList();
-            DisplayOutput = inputs[1].Split(' ').Select(module => new SevenSegment(module)).ToList();
+        public static bool operator !=(SevenSegment moduleA, SevenSegment moduleB)
+        {
+            return !(moduleA?.SegmentA == moduleB?.SegmentA
+                  && moduleA?.SegmentB == moduleB?.SegmentB
+                  && moduleA?.SegmentC == moduleB?.SegmentC
+                  && moduleA?.SegmentD == moduleB?.SegmentD
+                  && moduleA?.SegmentE == moduleB?.SegmentE
+                  && moduleA?.SegmentF == moduleB?.SegmentF
+                  && moduleA?.SegmentG == moduleB?.SegmentG);
+        }
+
+        public static SevenSegment operator +(SevenSegment moduleA, SevenSegment moduleB)
+        {
+            var segments = new SevenSegment();
+            segments.SegmentA = moduleA.SegmentA || moduleB.SegmentA ? true : false;
+            segments.SegmentB = moduleA.SegmentB || moduleB.SegmentB ? true : false;
+            segments.SegmentC = moduleA.SegmentC || moduleB.SegmentC ? true : false;
+            segments.SegmentD = moduleA.SegmentD || moduleB.SegmentD ? true : false;
+            segments.SegmentE = moduleA.SegmentE || moduleB.SegmentE ? true : false;
+            segments.SegmentF = moduleA.SegmentF || moduleB.SegmentF ? true : false;
+            segments.SegmentG = moduleA.SegmentG || moduleB.SegmentG ? true : false;
+            return segments;
+        }
+
+        public static SevenSegment operator -(SevenSegment moduleA, SevenSegment moduleB)
+        {
+            var segments = new SevenSegment();
+            segments.SegmentA = moduleA.SegmentA && moduleB.SegmentA ? false : moduleA.SegmentA;
+            segments.SegmentB = moduleA.SegmentB && moduleB.SegmentB ? false : moduleA.SegmentB;
+            segments.SegmentC = moduleA.SegmentC && moduleB.SegmentC ? false : moduleA.SegmentC;
+            segments.SegmentD = moduleA.SegmentD && moduleB.SegmentD ? false : moduleA.SegmentD;
+            segments.SegmentE = moduleA.SegmentE && moduleB.SegmentE ? false : moduleA.SegmentE;
+            segments.SegmentF = moduleA.SegmentF && moduleB.SegmentF ? false : moduleA.SegmentF;
+            segments.SegmentG = moduleA.SegmentG && moduleB.SegmentG ? false : moduleA.SegmentG;
+            return segments;
         }
     }
 

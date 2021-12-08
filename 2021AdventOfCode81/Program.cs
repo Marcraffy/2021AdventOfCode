@@ -25,13 +25,7 @@ namespace _2021AdventOfCode81
 
         static int Count147And8s(this Display display)
         {
-            var count = 0;
-            foreach (var module in display.DisplayOutput)
-            {
-                count += module.Is147Or8() ? 1 : 0;
-            }
-
-            return count;
+            return display.DisplayOutput.Count(module => module.Is147Or8());
         }
 
         static bool Is147Or8(this SevenSegment module)
