@@ -16,23 +16,23 @@ namespace _2021AdventOfCode82
             var count = 0;
             foreach (var display in displays)
             {
-                count += display.Translate().Output();
+                var output = display.Translate().Output();
+                Console.WriteLine($"Display output:\t {output}");
+                count += output;
             }
 
-            Console.WriteLine($"Display output total:\t {count} times");
+            Console.WriteLine($"Display output total:\t {count}");
         }
 
         private static List<TranslatedSevenSegment> Translate(this Display display)
         {
-            SevenSegment zero = null;
             SevenSegment one = display.SampleModules.FirstOrDefault(IsOne);
-            SevenSegment two = null;
-            SevenSegment three = null;
             SevenSegment four = display.SampleModules.FirstOrDefault(IsFour);
-            SevenSegment five = null;
-            SevenSegment six = null;
             SevenSegment seven = display.SampleModules.FirstOrDefault(IsSeven);
             SevenSegment eight = display.SampleModules.FirstOrDefault(IsEight);
+
+            SevenSegment zero = null;
+            SevenSegment six = null;
             SevenSegment nine = null;
 
             SevenSegment segmentA = null;
@@ -53,9 +53,7 @@ namespace _2021AdventOfCode82
                 foreach (var item in display.SampleModules)
                 {
                     if ((one == item || four == item || seven == item || eight == item)
-                        || (two == item)
-                        || (three == item)
-                        || (five == item)
+                        || (zero == item)
                         || (six == item)
                         || (nine == item))
                     {
@@ -64,6 +62,17 @@ namespace _2021AdventOfCode82
 
                     if (item.CountActiveSegments() == 6)
                     {
+                        if (zero == null)
+                        {
+                            if (six != null && six != item
+                             && nine != null && nine != item)
+                            {
+                                zero = item;
+                                segmentD = eight - zero;
+                                segmentB = four - one - segmentD;
+                            }
+                        }
+
                         if (six == null)
                         {
                             if (onesIndexes.Count(index => item.HasMatchingIndexes(index)) == 1)
@@ -86,30 +95,6 @@ namespace _2021AdventOfCode82
                                 segmentG = nine - fourPlusSeven;
                             }
                         }
-
-                        if (zero == null)
-                        {
-                            if (six != null && six != item
-                             && nine != null && nine != item)
-                            {
-                                zero = item;
-                                segmentD = eight - zero;
-                                segmentB = four - one - segmentD;
-                            }
-                        }
-                    }
-
-                    if (two == null && segmentB != null && segmentF != null)
-                    {
-                        two = eight - segmentB - segmentF;
-                    }
-                    if (three == null && segmentB != null && segmentE != null)
-                    {
-                        three = eight - segmentB - segmentE;
-                    }
-                    if (five == null && segmentC != null && segmentE != null)
-                    {
-                        five = eight - segmentC - segmentE;
                     }
 
                     if (segmentA != null
@@ -164,14 +149,6 @@ namespace _2021AdventOfCode82
             return activeSegmentCount;
         }
 
-        private static bool HasMatchingIndexes(this SevenSegment module, int index) => 
-            module.GetIndexes().Any(i => i == index);
-
-        private static int GetSingleIndex(this SevenSegment module)
-        {
-            return module.GetIndexes().Single();
-        }
-
         private static List<int> GetIndexes(this SevenSegment module)
         {
             var activeSegmentCount = new List<int>();
@@ -182,7 +159,6 @@ namespace _2021AdventOfCode82
             activeSegmentCount.Add((module.SegmentE) ? 5 : 0);
             activeSegmentCount.Add((module.SegmentF) ? 6 : 0);
             activeSegmentCount.Add((module.SegmentG) ? 7 : 0);
-
             return activeSegmentCount.Where(index => index != 0).ToList();
         }
 
@@ -196,9 +172,14 @@ namespace _2021AdventOfCode82
             segmentDifferences.Add(!(moduleA.SegmentE && moduleB.SegmentE) ? 5 : 0);
             segmentDifferences.Add(!(moduleA.SegmentF && moduleB.SegmentF) ? 6 : 0);
             segmentDifferences.Add(!(moduleA.SegmentG && moduleB.SegmentG) ? 7 : 0);
-
             return segmentDifferences.Where(index => index != 0).ToList();
         }
+
+        private static bool HasMatchingIndexes(this SevenSegment module, int index) 
+            => module.GetIndexes().Any(i => i == index);
+
+        private static int GetSingleIndex(this SevenSegment module) 
+            => module.GetIndexes().Single();
 
         private static bool IsOne(this SevenSegment module)
             => module.CountActiveSegments() == 2;
@@ -226,7 +207,9 @@ namespace _2021AdventOfCode82
             SegmentG = g;
         }
 
-        public TranslatedSevenSegment(string input) : base(input) { }
+        public TranslatedSevenSegment(string input) : base(input)
+        {
+        }
 
         public int Output()
         {
