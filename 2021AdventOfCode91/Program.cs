@@ -13,7 +13,7 @@ namespace _2021AdventOfCode091
         {
             var rows = Data.Data.GetData<Row>(DataFileKeys.HEIGHT);
 
-            var width = rows.First().RowHeights.Length;
+            var width = rows.First().Heights.Length;
             var riskLevels = new List<int>();
 
             for (int row = 0; row < rows.Count; row++)
@@ -41,12 +41,12 @@ namespace _2021AdventOfCode091
 
         public static int GetHeight(this List<Row> rows, int row, int column)
         {
-            var width = rows.First().RowHeights.Length;
+            var width = rows.First().Heights.Length;
             if (row < 0 || column < 0 || row >= rows.Count || column >= width)
             {
                 return 9;
             }
-            return rows[row].RowHeights[column];
+            return rows[row].Heights[column];
         }
     }
 }

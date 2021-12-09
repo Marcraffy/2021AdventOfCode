@@ -73,11 +73,11 @@ namespace Data
 
     public class Row
     {
-        public int[] RowHeights;
+        public int[] Heights;
 
         public Row(string input)
         {
-            RowHeights = input.Select(character => (int)Char.GetNumericValue(character)).ToArray();
+            Heights = input.Select(character => (int)Char.GetNumericValue(character)).ToArray();
         }
     }
 
@@ -216,6 +216,23 @@ namespace Data
             Column = Convert.ToInt32(data[0]);
             Row = Convert.ToInt32(data[1]);
         }
+
+        public override string ToString()
+        {
+            return $"Row: {Row}, Column: {Column}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Row == ((Coordinate)obj).Row
+                && Column == ((Coordinate)obj).Column;
+        }
+
+        public static bool operator ==(Coordinate coordinateA, Coordinate coordinateB)
+            => coordinateA.Row == coordinateB.Row && coordinateA.Column == coordinateB.Column;
+
+        public static bool operator !=(Coordinate coordinateA, Coordinate coordinateB)
+            => !(coordinateA.Row == coordinateB.Row && coordinateA.Column == coordinateB.Column);
     }
 
     public class BingoBoard
