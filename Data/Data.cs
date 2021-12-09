@@ -15,6 +15,7 @@ namespace Data
         public const string LIFE = "LIFE";
         public const string CRABS = "CRABS";
         public const string DISPLAY = "DISPLAY";
+        public const string HEIGHT = "HEIGHT";
     }
 
     public static class Data
@@ -29,6 +30,7 @@ namespace Data
             {DataFileKeys.LIFE, "life.txt"},
             {DataFileKeys.CRABS, "crabs.txt"},
             {DataFileKeys.DISPLAY, "display.txt"},
+            {DataFileKeys.HEIGHT, "height.txt"},
         };
 
         public static List<T> GetData<T>(string dataFileKey) where T: class
@@ -63,8 +65,19 @@ namespace Data
                 DataFileKeys.LIFE => new Lives(input) as T,
                 DataFileKeys.CRABS => new Horizontal(input) as T,
                 DataFileKeys.DISPLAY => new Display(input) as T,
+                DataFileKeys.HEIGHT => new Row(input) as T,
                 _ => null,
             };
+        }
+    }
+
+    public class Row
+    {
+        public int[] RowHeights;
+
+        public Row(string input)
+        {
+            RowHeights = input.Select(character => (int)Char.GetNumericValue(character)).ToArray();
         }
     }
 
