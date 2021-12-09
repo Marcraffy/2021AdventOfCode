@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace _2021AdventOfCode51
+namespace _2021AdventOfCode051
 {
     static class Program
     {

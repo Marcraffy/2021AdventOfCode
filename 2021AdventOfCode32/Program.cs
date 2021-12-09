@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace _2021AdventOfCode32
+namespace _2021AdventOfCode032
 {
     class Program
     {

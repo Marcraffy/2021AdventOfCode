@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace _2021AdventOfCode72
+namespace _2021AdventOfCode072
 {
     class Program
     {

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>_2021AdventOfCode71</RootNamespace>
+    <RootNamespace>_2021AdventOfCode012</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
