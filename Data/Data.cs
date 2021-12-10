@@ -78,11 +78,12 @@ namespace Data
     {
         public List<char> Brackets { get; set; }
 
-        public static char[] AcceptedBrackets = new char[] { '{', '}', '[', ']', '(', ')', '<', '>' };
+        public static char[] AcceptedOpeningBrackets = new char[] { '{', '[', '(', '<', };
+        public static char[] AcceptedClosingBrackets = new char[] { '}', ']', ')', '>' };
 
         public Syntax(string input)
         {
-            Brackets = input.Where(c => AcceptedBrackets.Any(bracket => bracket == c)).ToList();
+            Brackets = input.Where(c => AcceptedOpeningBrackets.Any(bracket => bracket == c) || AcceptedClosingBrackets.Any(bracket => bracket == c)).ToList();
         }
     }
 
