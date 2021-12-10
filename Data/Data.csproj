@@ -29,6 +29,9 @@
     <None Update="path.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="syntax.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="vents.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

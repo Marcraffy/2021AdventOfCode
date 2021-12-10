@@ -16,6 +16,7 @@ namespace Data
         public const string CRABS = "CRABS";
         public const string DISPLAY = "DISPLAY";
         public const string HEIGHT = "HEIGHT";
+        public const string SYNTAX = "SYNTAX";
     }
 
     public static class Data
@@ -31,6 +32,7 @@ namespace Data
             {DataFileKeys.CRABS, "crabs.txt"},
             {DataFileKeys.DISPLAY, "display.txt"},
             {DataFileKeys.HEIGHT, "height.txt"},
+            {DataFileKeys.SYNTAX, "syntax.txt"},
         };
 
         public static List<T> GetData<T>(string dataFileKey) where T: class
@@ -66,8 +68,21 @@ namespace Data
                 DataFileKeys.CRABS => new Horizontal(input) as T,
                 DataFileKeys.DISPLAY => new Display(input) as T,
                 DataFileKeys.HEIGHT => new Row(input) as T,
+                DataFileKeys.SYNTAX => new Syntax(input) as T,
                 _ => null,
             };
+        }
+    }
+
+    public class Syntax
+    {
+        public List<char> Brackets { get; set; }
+
+        public static char[] AcceptedBrackets = new char[] { '{', '}', '[', ']', '(', ')', '<', '>' };
+
+        public Syntax(string input)
+        {
+            Brackets = input.Where(c => AcceptedBrackets.Any(bracket => bracket == c)).ToList();
         }
     }
 
