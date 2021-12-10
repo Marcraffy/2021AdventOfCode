@@ -69,10 +69,7 @@ namespace _2021AdventOfCode101
 
                 if (hasFailed)
                 {
-                    if (true)
-                    {
-                        illegalErrors.Add(providedCharacter);
-                    }
+                    illegalErrors.Add(providedCharacter);
                 }
             }
 
