@@ -17,6 +17,7 @@ namespace Data
         public const string DISPLAY = "DISPLAY";
         public const string HEIGHT = "HEIGHT";
         public const string SYNTAX = "SYNTAX";
+        public const string POLYMER = "POLYMER";
     }
 
     public static class Data
@@ -33,6 +34,7 @@ namespace Data
             {DataFileKeys.DISPLAY, "display.txt"},
             {DataFileKeys.HEIGHT, "height.txt"},
             {DataFileKeys.SYNTAX, "syntax.txt"},
+            {DataFileKeys.POLYMER, "polymers.txt"},
         };
 
         public static List<T> GetData<T>(string dataFileKey) where T: class
@@ -51,6 +53,12 @@ namespace Data
                         bingoBoards.Add(new BingoBoard(board, numbers) as T);
                     }
                     return bingoBoards;
+                case DataFileKeys.POLYMER:
+                    var seed = dataSplitOnNewLine.First();
+                    var instructions = dataSplitOnNewLine.Skip(1).Where(item => !string.IsNullOrWhiteSpace(item)).ToList();
+                    var polymerizationInstructions = new List<T>();
+                    polymerizationInstructions = instructions.Select(instruction => new PolymerizationInstruction(instruction, seed)).ToList() as List<T>;
+                    return polymerizationInstructions;
                 default:
                     return data.Split('\n').Select(input => MapData<T>(dataFileKey, input.Trim())).ToList();
             }
@@ -71,6 +79,21 @@ namespace Data
                 DataFileKeys.SYNTAX => new Syntax(input) as T,
                 _ => null,
             };
+        }
+    }
+
+    public class PolymerizationInstruction
+    {
+        public string Seed { get; set; }
+        public string Pair { get; set; }
+        public string Insert { get; set; }
+
+        public PolymerizationInstruction(string input, string seed)
+        {
+            Seed = seed;
+            var instruction = input.Split(" -> ");
+            Pair = instruction.First();
+            Insert = $"{Pair.First()}{instruction.Last()}";
         }
     }
 
