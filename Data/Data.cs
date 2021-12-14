@@ -87,13 +87,17 @@ namespace Data
         public string Seed { get; set; }
         public string Pair { get; set; }
         public string Insert { get; set; }
+        public string Full { get; set; }
+        public char Addition { get; set; }
 
         public PolymerizationInstruction(string input, string seed)
         {
             Seed = seed;
             var instruction = input.Split(" -> ");
             Pair = instruction.First();
-            Insert = $"{Pair.First()}{instruction.Last()}";
+            Addition = instruction.Last().First();
+            Insert = $"{Pair.First()}{Addition}";
+            Full = $"{Insert}{Pair.Last()}";
         }
     }
 
