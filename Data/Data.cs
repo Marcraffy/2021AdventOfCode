@@ -296,7 +296,19 @@ namespace Data
         }
 
         public static bool operator ==(Coordinate coordinateA, Coordinate coordinateB)
-            => coordinateA.Row == coordinateB.Row && coordinateA.Column == coordinateB.Column;
+        {
+            if ((object)coordinateA == null && (object)coordinateB == null)
+            {
+                return true;
+            }
+
+            if ((object)coordinateA == null || (object)coordinateB == null)
+            {
+                return false;
+            }
+
+            return coordinateA.Row == coordinateB.Row && coordinateA.Column == coordinateB.Column;
+        }
 
         public static bool operator !=(Coordinate coordinateA, Coordinate coordinateB)
             => !(coordinateA.Row == coordinateB.Row && coordinateA.Column == coordinateB.Column);
