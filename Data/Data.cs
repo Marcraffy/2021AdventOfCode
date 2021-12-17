@@ -18,6 +18,7 @@ namespace Data
         public const string HEIGHT = "HEIGHT";
         public const string SYNTAX = "SYNTAX";
         public const string POLYMER = "POLYMER";
+        public const string TARGET = "TARGET";
     }
 
     public static class Data
@@ -35,6 +36,7 @@ namespace Data
             {DataFileKeys.HEIGHT, "height.txt"},
             {DataFileKeys.SYNTAX, "syntax.txt"},
             {DataFileKeys.POLYMER, "polymers.txt"},
+            {DataFileKeys.TARGET, "target.txt"},
         };
 
         public static List<T> GetData<T>(string dataFileKey) where T: class
@@ -77,8 +79,30 @@ namespace Data
                 DataFileKeys.DISPLAY => new Display(input) as T,
                 DataFileKeys.HEIGHT => new Row(input) as T,
                 DataFileKeys.SYNTAX => new Syntax(input) as T,
+                DataFileKeys.TARGET => new Target(input) as T,
                 _ => null,
             };
+        }
+    }
+
+    public class Target
+    {
+        public int UpperXBound { get; set; }
+        public int LowerXBound { get; set; }
+        public int UpperYBound { get; set; }
+        public int LowerYBound { get; set; }
+
+        public Target(string input)
+        {
+            var parsed = input.Replace("target area: x=", "").Replace("y=", "");
+            var coords = parsed.Split(", ");
+            var xCoords = coords.First().Trim().Split("..").Select(i => Convert.ToInt32(i));
+            var yCoords = coords.Last().Trim().Split("..").Select(i => Convert.ToInt32(i));
+
+            UpperXBound = xCoords.Max();
+            LowerXBound = xCoords.Min();
+            UpperYBound = yCoords.Max();
+            LowerYBound = yCoords.Min();
         }
     }
 

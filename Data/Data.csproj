@@ -35,6 +35,9 @@
     <None Update="syntax.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="target.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="vents.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
